@@ -16,12 +16,12 @@ from collections import deque
 
 import cv2
 import joblib
-import mediapipe as mp
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(__file__))
 from features import extract
 from actions import fire, DESCRIPTIONS
+from mp_hands import HandDetector, draw_landmarks, HAND_CONNECTIONS
 
 MODEL_DIR = os.path.join(os.path.dirname(__file__), "..", "models")
 CLF_PATH  = os.path.join(MODEL_DIR, "classifier.joblib")
@@ -125,10 +125,7 @@ def main():
     print(f"  Classes: {list(le.classes_)}\n")
 
     # ── MediaPipe ────────────────────────────────────────────────────────
-    mp_hands = mp.solutions.hands
-    mp_draw  = mp.solutions.drawing_utils
-    hands    = mp_hands.Hands(
-        static_image_mode=False,
+    hands = HandDetector(
         max_num_hands=1,
         min_detection_confidence=0.7,
         min_tracking_confidence=0.6,
@@ -165,10 +162,10 @@ def main():
 
         if result.multi_hand_landmarks:
             hl = result.multi_hand_landmarks[0]
-            mp_draw.draw_landmarks(
-                frame, hl, mp_hands.HAND_CONNECTIONS,
-                mp_draw.DrawingSpec(color=(80, 80, 220), thickness=2, circle_radius=3),
-                mp_draw.DrawingSpec(color=(160, 160, 255), thickness=1),
+            draw_landmarks(
+                frame, hl, HAND_CONNECTIONS,
+                {"color": (80, 80, 220), "thickness": 2, "circle_radius": 3},
+                {"color": (160, 160, 255), "thickness": 1},
             )
 
             feat   = extract(hl).reshape(1, -1)

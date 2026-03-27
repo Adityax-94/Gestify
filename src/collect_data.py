@@ -18,11 +18,11 @@ import sys
 import time
 
 import cv2
-import mediapipe as mp
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(__file__))
 from features import extract
+from mp_hands import HandDetector, draw_landmarks, HAND_CONNECTIONS
 
 # ── Gesture labels (order matters — used as class indices) ──────────────────
 GESTURES = [
@@ -38,10 +38,7 @@ SAMPLES_PER_GESTURE = 200   # aim for at least 150 good frames per class
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "gestures.csv")
 
 # ── MediaPipe setup ─────────────────────────────────────────────────────────
-mp_hands = mp.solutions.hands
-mp_draw  = mp.solutions.drawing_utils
-hands    = mp_hands.Hands(
-    static_image_mode=False,
+hands = HandDetector(
     max_num_hands=1,
     min_detection_confidence=0.7,
     min_tracking_confidence=0.6,
@@ -128,7 +125,7 @@ def main():
 
         if result.multi_hand_landmarks:
             hl = result.multi_hand_landmarks[0]
-            mp_draw.draw_landmarks(frame, hl, mp_hands.HAND_CONNECTIONS)
+            draw_landmarks(frame, hl, HAND_CONNECTIONS)
 
             if recording:
                 gesture = GESTURES[gesture_idx]
