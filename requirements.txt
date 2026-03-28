@@ -1,7 +1,15 @@
-opencv-python>=4.9
+# core ML
 mediapipe>=0.10
-pyautogui>=0.9
 scikit-learn>=1.4
 numpy>=1.26
-pandas>=2.2
 joblib>=1.4
+
+# webcam + drawing
+opencv-python>=4.9
+
+# HF Spaces UI
+gradio>=4.0
+
+# local run only (not needed on HF)
+# pyautogui>=0.9
+# pandas>=2.2
