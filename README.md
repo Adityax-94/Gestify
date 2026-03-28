@@ -1,3 +1,16 @@
+
+---
+title: Gestify
+emoji: 🖐
+colorFrom: purple
+colorTo: teal
+sdk: gradio
+sdk_version: "4.0"
+app_file: app.py
+pinned: false
+python_version: "3.10"
+---
+
 # Hand Gesture Controller
 
 Real-time hand gesture recognition that controls your system — volume, media playback, scroll, and mouse cursor — using a webcam and a trained MLP classifier on MediaPipe hand landmarks.
