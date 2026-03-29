@@ -9,11 +9,7 @@ A real-time hand gesture recognition system that controls your computer using ju
 
 ---
 
-## Demo
 
-> Record a short screen capture and paste the YouTube/GIF link here
-
----
 
 ## What it does
 
